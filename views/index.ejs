@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>CRUD</title>
+<style>
+  .delButton,#fts{position: relative;}
+</style>
+</head>
+<body>
+<center>Test this CRUd!</center>
+<hr>
+
+<h4>Add your Score / Comment via Form</h4>
+<form action="/crud" method="POST">
+    <input type="text" name="name" placeholder="enter name">
+    <input type="text" name="score" placeholder="enter score">
+    <button type="submit">Submit</button>
+</form>
+
+<h4>Delete a Score / Comment via Form</h4>
+<form>
+    <input type="text" id="delForm" name="name" placeholder="enter name to delete">
+    <button id="delButton">Submit</button>
+</form>
+<hr>
+<div class="hcButton">
+  <button id="delete">Delete</button>
+   <em><b> Delete a Score via button (hard-cocded JS) </b></em>
+</div>
+
+<div class="hcButton">
+  <br>
+  <button id="update">Update</button>
+  <em><b> Update your Score via button (hard-cocded JS)</b></em>
+</div>
+
+<hr>
+<div class="hcButton">
+  <button id="ajax" type="submit" onclick="sendAJAX(); return false;">AJAX</button>
+  <b>Ajax Call</b>
+  <div id="fts">...</div>
+</div>
+<hr>
+<br>
+
+<ul class="crud">
+  <% for(var i=0; i<crud.length; i++) {%>
+    <li class="cruds">
+      <span><%= crud[i].name + ' - ' %></span>
+      <span><%= crud[i].score + ' - ' %></span>
+      <span><%= crud[i].time %></span>
+    </li>
+  <% } %>
+</ul>
+<script src="put.js"></script>
+</body>
+</html>
