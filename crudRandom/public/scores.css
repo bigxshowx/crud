@@ -1,0 +1,35 @@
+
+  .delButton,#fts {
+      position: relative;
+}
+
+  table {
+  margin: 0 auto;
+  border: 2px solid green;
+  margin-top: 35px;
+}
+
+th {
+  background: #a7bbe0;
+  font-weight: bold;
+}
+
+
+tr:nth-child(even) {
+  background: #d4d4d4;
+}
+
+th, td {
+  padding: 2.5px 7.5px;
+}
+
+#footer{
+  font-family: 'Josefin Sans', sans-serif;
+  position: relative;
+  text-align: center;
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 35px;
+  margin-bottom: 35px;
+  width: 100%;
+}

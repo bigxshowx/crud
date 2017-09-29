@@ -1,0 +1,20 @@
+table {
+  margin: 0 auto;
+  text-align: center;
+  border-collapse: collapse;
+  border: 2px solid green;
+}
+
+li:first-child {
+  background: #a7bbe0;
+  font-weight: bold;
+}
+
+
+li:nth-child(even) {
+  background: #d4d4d4;
+}
+
+li {
+  padding: 2.5px 7.5px;
+}

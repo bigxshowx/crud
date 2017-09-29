@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
+const keys = require('./keys');
 let db;
 let plays;
 
@@ -15,12 +16,12 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-MongoClient.connect('mongodb://tony:simon@ds161262.mlab.com:61262/simon_scores', (err, database) => {
+MongoClient.connect(keys.mongoDB, (err, database) => {
     if (err) console.log(err);
     db = database;
     //server start
-    app.listen(8081, function() {
-        console.log('listening on IDE 8081');
+    app.listen(3000, function() {
+        console.log('listening on 3000');
     });
 });
 
@@ -28,34 +29,34 @@ app.get('/', function(req, res){
     //res.sendFile('/home/ubuntu/workspace/' + 'index.ejs');
     //var cursor = db.collection('crud').find();
     //var test = ['what', "the", 'Hell'];
-    db.collection('crud').find().toArray((err, results) => {
+    db.collection('crud_random').find().toArray((err, results) => {
         if (err) console.log(err);
        //console.log(results);
-       res.render('index.ejs', {crud: results});
+       res.render('scores.ejs', {score: results});
     });
     //res.render('index.ejs', {crud: test});
 });
 
-app.post("/crud", (req, res) => {
+app.post("/score", (req, res) => {
     plays++;
-    let test = new Date();
-    let date = test.toString().substr(4,11);
+    let setDate = new Date();
+    let date = setDate.toString().substr(4,11);
     req.body.time = date;
     console.log(req.body);
-    db.collection('crud').save(req.body, (err, result) => {
+    db.collection('crud_random').save(req.body, (err, result) => {
         if (err) console.log(err);
         console.log('Saved to DB');
         res.redirect('/');
     });
 });
 
-app.put('/crud', (req, res) => {
-  db.collection('crud')
-  .findOneAndUpdate({name: 'Bubba'},{
+app.put('/scores', (req, res) => {
+  console.log(req.body);
+  db.collection('crud_random')
+  .findOneAndUpdate({name: req.body.name},{
       //  {name: req.body.name}
     $set: {
-        name: req.body.name,
-        score: req.body.score,
+        score: req.body.score
       }
     },
     {
@@ -65,11 +66,13 @@ app.put('/crud', (req, res) => {
     (err, result) => {
         if (err) return res.send(err);
         res.send(result);
+        //res.send({message: 'sending from the server!'});
     });
 });
 
-app.delete('/crud', (req, res) => {
-   db.collection('crud').findOneAndDelete(
+app.delete('/scores', (req, res) => {
+   console.log('F the ' + req.body.name);
+   db.collection('crud_random').findOneAndDelete(
        {name: req.body.name},
        //find way to sort the score values instead of entry ID...
        {sort: {_id: -1} },

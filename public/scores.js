@@ -1,61 +1,48 @@
 const http = new XMLHttpRequest();
 const url = 'https://jsonplaceholder.typicode.com/posts';
-var test;
-var i = 0;
+var ajaxResponse;
+var count = 0;
+var test = '';
 
+//random HTTP AJAX
 http.onreadystatechange = function() {
   if (http.readyState === 4 && http.status === 200){
-     test = (JSON.parse(http.responseText)[3].body).substr(1,10);
+     ajaxResponse = (JSON.parse(http.responseText)[3].body).substr(1,10);
      var text = document.getElementById('fts');
-     text.innerHTML = '------>' + test + ' ' + i++;
-     console.log(test);
+     count++;
+     text.innerHTML = '------>' + ajaxResponse + ' ' + count;
+     document.getElementById('myScore').value = count;
+     console.log(ajaxResponse);
   } else if (http.readyState === http.DONE && http.status !== 200) {
      console.log('Error!');
   }
 };
 
+
 var update = document.getElementById('update');
+var changeName = document.getElementById('changeName');
+var changeScore = document.getElementById('changeScore');
+var change = document.getElementById('change');
 update.addEventListener('click', function(){
     //http.open(method, url);
     //http.send();
-    fetch('crud', {
+    fetch('scores', {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            'name': 'Mike Tyson',
-            'score': 'I want to eat your Children!'
+            'name': changeName.value,
+            'score': changeScore.value
         })
     }).then(res => {
-        if (res.ok) return res.json();
-    }).then(data => {
-        console.log(data);
-        //input some react here to update the DOM dynamically!!
+        document.getElementById('change').innerHTML = res;
         window.location.reload(true);
-    });
-});
-
-var del = document.getElementById('delete');
-del.addEventListener('click', function(){
-    fetch('crud', {
-        method: 'DELETE',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            'name': 'Mike Tyson',
-        })
-    }).then(res => {
-        if (res.ok) return res.json();
-    }).then(data => {
-        console.log(data);
-        //input some react here to update the DOM dynamically!!
-        window.location.reload(true);
-        alert(data.message);
-    });
+     });
 });
 
 var delForm = document.getElementById('delForm');
 var delButton = document.getElementById('delButton');
 delButton.addEventListener('click', function(){
-    fetch('crud', {
+    fetch('scores', {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -66,9 +53,11 @@ delButton.addEventListener('click', function(){
     }).then(data => {
         console.log(data);
         //input some react here to update the DOM dynamically!!
-        window.location.reload(true);
-        setTimeout(() => alert(data.message), 1000);
+        document.getElementById('del').innerHTML = data;
+        //window.location.reload(true);
+        //setTimeout(() => alert(data.message), 1000);
     });
+    //setTimeout(() => document.getElementById('del').innerHTML = test, 1000);
 });
 
 function sendAJAX(){

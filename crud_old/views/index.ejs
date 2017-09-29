@@ -1,0 +1,39 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="crud.js"></script>
+
+<ul class="scores">
+  <% for(var i=0; i<score.length; i++) {%>
+    <li class="score">
+      <span><%= score[i].name %></span>
+      <span><%= score[i].score %></span>
+    </li>
+  <% } %>
+</ul>
+ <div id="ajax">
+   Yo, Test. this shit!
+  </div>
+  <button id="testButton">Test</button>
+  <br>
+  <h3>Enter your name and log your Score!</h3>
+  <form id="input" action="/score" method="POST">
+  	<input type="text" placeholder="name" name="name">
+  	<input type="text" placeholder="score" name="score">
+  	<button id="submit">Submit</button>
+  </form>
+  <br>
+  <div>
+  <h3>Replace last score of X with a score of Y</h3>
+  <button id="update"> Update </button>
+</div>
+  <br>
+  <div>
+  <h2>Delete a score</h2>
+  <form id="remove" action="/score" method="delete">
+    <input type="text" placeholder="Name to Delete" name="name">
+    <button id="delete"> Delete Score </button>
+  </form>
+</div>
+<br>
+<div id="display">testing . . .</div>
+<br>
+
